@@ -4,7 +4,7 @@
 // replace with your channel’s thingspeak API key,
 String apiKey = "8SM299R6WUJ323YY";
 const char* ssid = "Forthnet-24F230";
-const char* password = "C4294B4C9A";
+const char* password = "password";
 
 const char* server = "api.thingspeak.com";
 #define DHTPIN 2 // what pin we’re connected to
