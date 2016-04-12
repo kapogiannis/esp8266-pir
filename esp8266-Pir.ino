@@ -2,8 +2,8 @@
 #include <ESP8266WiFi.h>
 
 // replace with your channel’s thingspeak API key,
-String apiKey = "8SM299R6WUJ323YY";
-const char* ssid = "Forthnet-24F230";
+String apiKey = "*******WUJ323YY";
+const char* ssid = "ssid";
 const char* password = "password";
 
 const char* server = "api.thingspeak.com";
