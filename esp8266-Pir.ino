@@ -2,20 +2,21 @@
 #include <ESP8266WiFi.h>
 
 // replace with your channel’s thingspeak API key,
-String apiKey = "*******WUJ323YY";
-const char* ssid = "ssid";
-const char* password = "password";
+String apiKey = "8SM299R6WUJ323YY";
+const char* ssid = "Forthnet-24F230";
+const char* password = "C4294B4C9A";
 
 const char* server = "api.thingspeak.com";
-#define DHTPIN 2 // what pin we’re connected to
+const int buttonPin = 0;
+int buttonState = 0;
+int pir=0;
 
-DHT dht(DHTPIN, DHT11,15);
 WiFiClient client;
 
 void setup() {
 Serial.begin(9600);
 delay(10);
-dht.begin();
+
 
 WiFi.begin(ssid, password);
 
@@ -33,23 +34,31 @@ Serial.print(".");
 Serial.println("");
 Serial.println("WiFi connected");
 
+ pinMode(LED_BUILTIN, OUTPUT); 
+ pinMode(buttonPin, INPUT);
+
 }
 
 void loop() {
 
-float h = dht.readHumidity();
-float t = dht.readTemperature();
-if (isnan(h) || isnan(t)) {
-Serial.println("Failed to read from DHT sensor!");
-return;
-}
+buttonState = digitalRead(buttonPin);
+ if (buttonState == HIGH) {
+    // turn LED on:
+  //  digitalWrite(ledPin, HIGH);
+  } else {
+    // turn LED off:
+   // digitalWrite(ledPin, LOW);
+  }
 
 if (client.connect(server,80)) { // "184.106.153.149" or api.thingspeak.com
+   digitalWrite(LED_BUILTIN, LOW);
 String postStr = apiKey;
 postStr +="&field1=";
-postStr += String(t);
+postStr += String(10);
 postStr +="&field2=";
-postStr += String(h);
+postStr += String(10);
+postStr +="&field3=";
+postStr += String(pir);
 postStr += "\r\n\r\n";
 
 client.print("POST /update HTTP/1.1\n");
@@ -61,16 +70,34 @@ client.print("Content-Length: ");
 client.print(postStr.length());
 client.print("\n\n");
 client.print(postStr);
+digitalWrite(LED_BUILTIN, HIGH);
+delay(500);
 
 Serial.print("Temperature: ");
-Serial.print(t);
+Serial.print(10);
 Serial.print(" degrees Celcius Humidity: ");
-Serial.print(h);
+Serial.print(10);
 Serial.println("% send to Thingspeak");
+
 }
 client.stop();
+pir=0;
+for (int thisPin = 1; thisPin < 200; thisPin++) {
+    buttonState = digitalRead(buttonPin);
+     if (buttonState == HIGH) {
+    // turn LED on:
+    pir=1;
+  digitalWrite(LED_BUILTIN, LOW);
+     }
+  delay(50);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(50);
+  
+   
+  }
+
 
 Serial.println("Waiting…");
 // thingspeak needs minimum 15 sec delay between updates
-delay(20000);
+
 }
