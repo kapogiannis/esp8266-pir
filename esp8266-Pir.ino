@@ -32,7 +32,7 @@ delay(500);
 Serial.print(".");
 }
 Serial.println("");
-Serial.println("WiFi connected");
+Serial.println("WiFi connected-.-");
 
  pinMode(LED_BUILTIN, OUTPUT); 
  pinMode(buttonPin, INPUT);
@@ -71,18 +71,18 @@ client.print(postStr.length());
 client.print("\n\n");
 client.print(postStr);
 digitalWrite(LED_BUILTIN, HIGH);
-delay(500);
+//delay(500);
 
-Serial.print("Temperature: ");
-Serial.print(10);
-Serial.print(" degrees Celcius Humidity: ");
-Serial.print(10);
-Serial.println("% send to Thingspeak");
+//Serial.print("Temperature: ");
+//Serial.print(10);
+//Serial.print(" degrees Celcius Humidity: ");
+//Serial.print(10);
+Serial.println("send to Thingspeak");
 
 }
 client.stop();
 pir=0;
-for (int thisPin = 1; thisPin < 200; thisPin++) {
+for (int thisPin = 1; thisPin < 210; thisPin++) {
     buttonState = digitalRead(buttonPin);
      if (buttonState == HIGH) {
     // turn LED on:
@@ -101,3 +101,4 @@ Serial.println("Waiting…");
 // thingspeak needs minimum 15 sec delay between updates
 
 }
+
